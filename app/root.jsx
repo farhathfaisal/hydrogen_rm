@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
   useRouteLoaderData,
+  useMatches,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
@@ -167,8 +168,19 @@ export function Layout({children}) {
 export default function App() {
   /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
+  const matches = useMatches();
+
+  // Check if current route is a landing page (no header/footer)
+  const isLandingPage = matches.some(
+    (match) => match.handle?.isLandingPage === true
+  );
 
   if (!data) {
+    return <Outlet />;
+  }
+
+  // Render landing page without PageLayout wrapper or Analytics
+  if (isLandingPage) {
     return <Outlet />;
   }
 
