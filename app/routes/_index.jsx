@@ -5,8 +5,12 @@ import {LandingPage} from '~/components/LandingPage';
  */
 export const meta = () => {
   return [
-    {title: 'Amira | A Coat for Your Heritage'},
-    {name: 'description', content: 'Amira is a coat designed to complement the elegance of salwar kameez, saris, abayas, and other ethnic attire. Sign up to be the first to know.'},
+    {title: 'Rani Mode'},
+    {
+      name: 'description',
+      content:
+        "We're creating a new style of coat, purposefully designed to complement your cultural clothes and keep you warm and stylish.",
+    },
   ];
 };
 
