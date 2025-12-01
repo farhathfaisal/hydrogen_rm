@@ -33,13 +33,13 @@ function useIsMobile() {
 // Desktop: 240vw / 3.6s = 66.7vw/s (same visual speed as before)
 const PHASE_CONFIG = {
   mobile: {
-    loaderDuration: 2000,
-    animationDuration: 2.5, // seconds - time for text to cross screen
+    loaderDuration: 1000,
+    animationDuration: 2, // seconds - time for text to cross screen
     translateDistance: 280, // 120vw - just off screen
   },
   desktop: {
-    loaderDuration: 2000,
-    animationDuration: 3, // seconds - maintains same speed as before
+    loaderDuration: 1000,
+    animationDuration: 2, // seconds - maintains same speed as before
     translateDistance: 100, // 120vw - just off screen
   },
 };
@@ -190,92 +190,166 @@ function HeroSection() {
 
   return (
     <motion.section
-      className="min-h-screen flex flex-col justify-center items-center text-center p-8"
+      className="h-screen flex flex-col items-center justify-center p-8 sm:p-16"
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       transition={{duration: 0.5}}
     >
-      {/* Logo */}
-      <motion.h1
-        className="text-2xl font-black tracking-widest uppercase text-[#1a1a1a] mb-8"
-        initial={{opacity: 0, y: -20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.5, delay: 0.2}}
-      >
-        Rani Mode
-      </motion.h1>
+      {/* Center content wrapper */}
+      <div className="flex flex-col items-center">
+        {/* Logo - at top with padding */}
+        <motion.h1
+          className="text-2xl font-bold mb-12 uppercase text-[#1a1a1a]"
+          style={{fontFamily: 'Georgia, serif'}}
+          initial={{opacity: 0, y: -20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.4, delay: 0}}
+        >
+          Rani Mode
+        </motion.h1>
+        {/* Typewriter Tagline */}
+        <motion.p
+          className="font-serif text-[clamp(1.25rem,4vw,2rem)] font-medium italic leading-relaxed text-[#722F37] max-w-4xl text-center"
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{duration: 0.4, delay: 0.2}}
+        >
+          {tagline.split('').map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              transition={{
+                duration: 0.03,
+                delay: 0.5 + index * 0.03,
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </motion.p>
 
-      {/* Typewriter Tagline */}
-      <motion.p
-        className="font-serif text-[clamp(1.25rem,4vw,2rem)] font-semibold italic leading-relaxed text-[#722F37] max-w-4xl text-center"
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        transition={{duration: 0.3, delay: 0.4}}
-      >
-        {tagline.split('').map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            transition={{
-              duration: 0.03,
-              delay: 0.5 + index * 0.03,
-            }}
-          >
-            {char}
-          </motion.span>
-        ))}
-      </motion.p>
+        {/* Coming Soon Badge - above tagline */}
+        <motion.div
+          className="mt-6"
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{duration: 0.5, delay: 4}}
+        >
+          <p className="text-sm font-medium tracking-[0.25em] uppercase text-[#722F37]">
+            Coming Soon
+          </p>
+        </motion.div>
 
-      {/* Signup Form */}
-      {/* <motion.form
-        onSubmit={handleSubmit}
-        className="mt-10 w-full max-w-[480px]"
-        initial={{opacity: 0, y: 20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.5, delay: 3.5}}
-      >
-        <div className="flex items-stretch w-full">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            required
-            disabled={status === 'loading' || status === 'success'}
-            className="flex-1 min-w-0 px-5 py-4 text-base leading-none border border-[#722F37] border-r-0 rounded-none bg-white/50 text-[#1a1a1a] placeholder:text-[#1a1a1a]/50 outline-none focus:bg-white/80 disabled:opacity-50"
-          />
-          <button
-            type="submit"
-            disabled={status === 'loading' || status === 'success'}
-            className="shrink-0 px-6 py-4 text-sm font-medium tracking-wider uppercase whitespace-nowrap bg-[#722F37] text-[#F5F0E8] border border-[#722F37] rounded-none cursor-pointer transition-all duration-300 hover:bg-[#5a252b] hover:border-[#5a252b] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
-          </button>
-        </div>
+        {/* Signup Form */}
+        <motion.form
+          onSubmit={handleSubmit}
+          className="mt-10 w-full max-w-[480px]"
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.5, delay: 4.2}}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-stretch w-full gap-0">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+              disabled={status === 'loading' || status === 'success'}
+              className="w-full sm:flex-1 sm:min-w-0 px-5 py-4 text-base leading-none border border-[#722F37] sm:border-r-0 rounded-none bg-white/50 text-[#1a1a1a] placeholder:text-[#1a1a1a]/50 outline-none focus:bg-white/80 disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              disabled={status === 'loading' || status === 'success'}
+              className="w-full sm:w-auto sm:shrink-0 px-6 py-4 text-sm font-medium tracking-wider uppercase whitespace-nowrap bg-[#722F37] text-[#F5F0E8] border border-[#722F37] rounded-none cursor-pointer transition-all duration-300 hover:bg-[#5a252b] hover:border-[#5a252b] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
+            </button>
+          </div>
 
-        {message && (
-          <motion.p
-            className={`mt-4 text-sm text-center ${status === 'success' ? 'text-[#722F37]' : 'text-red-700'}`}
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-          >
-            {message}
-          </motion.p>
-        )}
-      </motion.form> */}
+          {status === 'error' && (
+            <motion.p
+              className="mt-4 text-sm text-center text-red-700"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+            >
+              {message}
+            </motion.p>
+          )}
+        </motion.form>
 
-      {/* Coming Soon Badge */}
-      <motion.div
-        className="mt-12"
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        transition={{duration: 0.5, delay: 3.8}}
-      >
-        <p className="text-sm font-medium tracking-[0.25em] uppercase text-[#722F37]">
-          Coming Soon
-        </p>
-      </motion.div>
+        {/* Success Box */}
+        <AnimatePresence>
+          {status === 'success' && (
+            <motion.div
+              className="mt-6 w-full max-w-[480px] border border-[#722F37] bg-white p-6"
+              initial={{opacity: 0, y: 10}}
+              animate={{opacity: 1, y: 0}}
+              transition={{duration: 0.4}}
+            >
+              <div className="flex flex-col items-center text-center">
+                {/* Animated Checkmark */}
+                <motion.svg
+                  className="w-12 h-12 mb-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  initial={{scale: 0}}
+                  animate={{scale: 1}}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 200,
+                    damping: 15,
+                    delay: 0.2,
+                  }}
+                >
+                  <motion.circle
+                    cx="12"
+                    cy="12"
+                    r="11"
+                    fill="#722F37"
+                    initial={{scale: 0}}
+                    animate={{scale: 1}}
+                    transition={{duration: 0.3, delay: 0.2}}
+                  />
+                  <motion.path
+                    d="M8 12l2.5 2.5L16 9"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    initial={{pathLength: 0}}
+                    animate={{pathLength: 1}}
+                    transition={{duration: 0.3, delay: 0.5}}
+                  />
+                </motion.svg>
+
+                {/* Success Message */}
+                <motion.p
+                  className="text-lg font-medium text-[#1a1a1a] mb-3"
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{delay: 0.5}}
+                >
+                  You're on the list!
+                </motion.p>
+
+                {/* Double Opt-in Message */}
+                <motion.p
+                  className="text-sm text-[#1a1a1a]/70 leading-relaxed"
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{delay: 0.8}}
+                >
+                  Please check your inbox and confirm your subscription to
+                  complete the sign-up process.
+                </motion.p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.section>
   );
 }
