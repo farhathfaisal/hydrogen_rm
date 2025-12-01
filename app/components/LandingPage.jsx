@@ -228,7 +228,7 @@ function HeroSection() {
       </motion.p>
 
       {/* Signup Form */}
-      <motion.form
+      {/* <motion.form
         onSubmit={handleSubmit}
         className="mt-10 w-full max-w-[480px]"
         initial={{opacity: 0, y: 20}}
@@ -263,7 +263,7 @@ function HeroSection() {
             {message}
           </motion.p>
         )}
-      </motion.form>
+      </motion.form> */}
 
       {/* Coming Soon Badge */}
       <motion.div
