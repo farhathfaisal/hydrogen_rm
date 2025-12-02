@@ -157,6 +157,7 @@ function SplitTextPhase({config, onComplete}) {
  */
 function HeroSection() {
   const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
 
@@ -173,6 +174,7 @@ function HeroSection() {
       });
 
       if (response.ok) {
+        setSubmittedEmail(email);
         setStatus('success');
         setMessage('Thank you for joining us.');
         setEmail('');
@@ -234,7 +236,7 @@ function HeroSection() {
           className="mt-6"
           initial={{opacity: 0}}
           animate={{opacity: 1}}
-          transition={{duration: 0.5, delay: 4}}
+          transition={{duration: 0.5, delay: 4.5}}
         >
           <p className="text-sm font-medium tracking-[0.25em] uppercase text-[#722F37]">
             Coming Soon
@@ -247,7 +249,7 @@ function HeroSection() {
           className="mt-10 w-full max-w-[480px]"
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.5, delay: 4.2}}
+          transition={{duration: 0.5, delay: 5}}
         >
           <div className="flex flex-col sm:flex-row sm:items-stretch w-full gap-0">
             <input
@@ -335,15 +337,25 @@ function HeroSection() {
                   You're on the list!
                 </motion.p>
 
-                {/* Double Opt-in Message */}
+                {/* Submitted Email */}
+                <motion.p
+                  className="text-sm font-medium text-[#1a1a1a] mb-2"
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{delay: 0.6}}
+                >
+                  {submittedEmail}
+                </motion.p>
+
+                {/* Thank You Message */}
                 <motion.p
                   className="text-sm text-[#1a1a1a]/70 leading-relaxed"
                   initial={{opacity: 0}}
                   animate={{opacity: 1}}
                   transition={{delay: 0.8}}
                 >
-                  Please check your inbox and confirm your subscription to
-                  complete the sign-up process.
+                  Thank you for joining us early on this journey. We'll keep you
+                  updated with exciting news and offers.
                 </motion.p>
               </div>
             </motion.div>

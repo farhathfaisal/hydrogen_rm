@@ -1,8 +1,8 @@
 /**
  * Klaviyo Newsletter Signup API Route
  *
- * Uses profile-subscription-bulk-create-jobs with historical_import: false
- * to trigger double opt-in.
+ * Uses profile-subscription-bulk-create-jobs with historical_import: true
+ * for single opt-in (immediate subscription).
  *
  * Set up in .env:
  *   - KLAVIYO_PRIVATE_API_KEY=your_private_api_key
@@ -39,8 +39,8 @@ export async function action({request, context}) {
       });
     }
 
-    // Use profile-subscription-bulk-create-jobs with historical_import: false
-    // This triggers double opt-in when the list has it enabled
+    // Use profile-subscription-bulk-create-jobs with historical_import: true
+    // This enables single opt-in (immediate subscription)
     const response = await fetch(
       'https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs',
       {
@@ -55,7 +55,6 @@ export async function action({request, context}) {
           data: {
             type: 'profile-subscription-bulk-create-job',
             attributes: {
-              historical_import: false,
               profiles: {
                 data: [
                   {
